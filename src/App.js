@@ -55,7 +55,7 @@ class App extends Component {
         appointment: this.state.appointment,
         text: this.state.text
       };
-      axios.post('http://localhost:5000/chatApi/sendMsg', payload);
+      axios.post('https://chat-api-x.herokuapp.com/chatApi/sendMsg', payload);
     } else {
       this.setState({ text: e.target.value });
     }
