@@ -25,7 +25,7 @@ class App extends Component {
     const pusher = new Pusher('860995510ee9701b6238', {
       cluster: 'ap2',
       encrypted: true,
-      authEndpoint: "https://chat-api-x.herokuapp.com/p_auth",
+      authEndpoint: "https://chat-api-x.herokuapp.com/chatApi/p_auth",
       auth : {
         params: {
           appointment,
