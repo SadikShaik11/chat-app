@@ -5,6 +5,7 @@ import ChatList from './ChatList';
 import ChatBox from './ChatBox';
 import logo from './logo.svg';
 import './App.css';
+import jwt_decode from 'jwt-decode';
 
 class App extends Component {
   constructor(props) {
