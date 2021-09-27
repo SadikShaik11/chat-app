@@ -18,10 +18,23 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const username = window.prompt('Username: ', 'Anonymous');
-    this.setState({ username });
-    const appointment = window.prompt('AppointmentID: ', 'null');
-    this.setState({ appointment });
+    let token = window.prompt('Enter Token', 'paste token here');
+    //verfiy and decode token
+    try {
+      const decoded = jwt_decode(token);
+      let username = decoded.username;
+      let appointment = decoded.appointmentid
+      this.setState({ username });
+      this.setState({ appointment });
+      
+      //appending previous messages
+      let url = 'https://chat-api-x.herokuapp.com/chatApi/getChat/' + appointment + '?page=1&limit=30';
+      axios.get(url).then(result => {
+        console.log(result.data.messages)
+        let chats = result.data.messages
+        this.setState({ chats })
+      })
+
     const pusher = new Pusher('860995510ee9701b6238', {
       cluster: 'ap2',
       encrypted: true,
