@@ -27,7 +27,7 @@ class App extends Component {
       this.setState({ username });
       this.setState({ appointment });
       
-      //appending previous messages
+      // append previous messages
       let url = 'https://chat-api-x.herokuapp.com/chatApi/getChat/' + appointment + '?page=1&limit=30';
       axios.get(url).then(result => {
         console.log(result.data.messages)
@@ -35,29 +35,31 @@ class App extends Component {
         this.setState({ chats })
       })
 
-    const pusher = new Pusher('860995510ee9701b6238', {
-      cluster: 'ap2',
-      encrypted: true,
-      authEndpoint: "https://chat-api-x.herokuapp.com/chatApi/p_auth",
-      auth : {
-        params: {
-          appointment,
-          username
+      const pusher = new Pusher('860995510ee9701b6238', {
+        cluster: 'ap2',
+        encrypted: true,
+        authEndpoint: "https://chat-api-x.herokuapp.com/chatApi/p_auth",
+        auth : {
+          params: {
+            appointment,
+            username
+          }
         }
-      }
-    });
-    console.log("This is appointment: ", appointment)
-    //this works
-    const channel = pusher.subscribe("private-" + appointment);
-    console.log(channel)
+      });
+      console.log("This is appointment: ", appointment)
+      //this works
+      const channel = pusher.subscribe("private-" + appointment);
+      console.log(channel)
     
-    channel.bind('inserted', data => {
-      this.setState({ chats: [...this.state.chats, data]});
-      console.log("This is data: ", data)
-    });
+      channel.bind('inserted', data => {
+        this.setState({ chats: [...this.state.chats, data]});
+        console.log("This is data: ", data)
+      });
     
-    this.handleTextChange = this.handleTextChange.bind(this);
-    
+      this.handleTextChange = this.handleTextChange.bind(this);
+    } catch (e) {
+      console.log('token error', e)
+    }
   }
   
   
